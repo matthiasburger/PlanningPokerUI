@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  hubUrl: 'http://localhost:5283/hub'
+  hubUrl: 'planning-poker-bggad0a7afhxenej.switzerlandnorth-01.azurewebsites.net/hub'
 };
