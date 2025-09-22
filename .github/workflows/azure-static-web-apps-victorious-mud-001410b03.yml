@@ -41,7 +41,7 @@ jobs:
                const coredemo = require('@actions/core')
                return await coredemo.getIDToken()
            result-encoding: string
-           
+
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
@@ -50,10 +50,10 @@ jobs:
           action: "upload"
           ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
           # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
-          app_location: "dist/planning-poker-frontend"   # hier liegt dein index.html!
+          app_location: "dist/planning-poker-frontend/browser"   # hier liegt dein index.html!
           api_location: ""
           output_location: ""                            # leer lassen, wenn app_location schon auf Output zeigt
-          
+
           skip_app_build: true
           github_id_token: ${{ steps.idtoken.outputs.result }}
           ###### End of Repository/Build Configurations ######
