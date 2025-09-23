@@ -30,8 +30,8 @@ export class App implements OnInit {
   connection!: signalR.HubConnection;
   connected = false;
 
-  displayName = '';
-  roomId = '';
+  displayName = signal<string|undefined>(undefined);
+  roomId = signal<string|undefined>(undefined);
   snapshot = signal<Snapshot|undefined>(undefined);
   userId = signal<string|undefined>(undefined);
   chosenCard = signal<string|undefined>(undefined);
@@ -65,11 +65,12 @@ export class App implements OnInit {
 
       const lastRoom = localStorage.getItem('pp_lastRoomId');
       const lastName = localStorage.getItem('pp_displayName');
+      this.displayName.set(lastName!);
 
       if (lastRoom && lastName) {
         // Versuch Rejoin
         await this.connection.invoke('JoinRoom', lastRoom, lastName, this.userId());
-        this.roomId = lastRoom;
+        this.roomId.set(lastRoom);
       }
     } else {
       // Server-Kontext: kein localStorage verfügbar
@@ -85,8 +86,8 @@ export class App implements OnInit {
 
       this.connection.invoke('JoinRoom', lastRoom, lastName, this.userId())
         .then(() => {
-          this.roomId = lastRoom!;
-          this.displayName = lastName!;
+          this.roomId.set(lastRoom!);
+          this.displayName.set(lastName!);
           this.registerHandlers();
           if (this.chosenCard())
           {
@@ -100,63 +101,63 @@ export class App implements OnInit {
     this.connection.on('revealed', snap => this.zone.run(() => (this.snapshot.set(snap))));
     this.connection.on('roomDeleted', (roomId: string) =>
       this.zone.run(() => {
-        if (this.roomId === roomId) {
+        if (this.roomId() === roomId) {
           alert('Room deleted');
           this.snapshot.set(undefined);
-          this.roomId = '';
+          this.roomId.set('');
         }
       })
     );
     this.connection.on('kicked', (msg: string) => {
       alert(msg);
       this.snapshot.set(undefined);
-      this.roomId = '';
+      this.roomId.set('');
     });
   }
 
   async createRoom() {
-    if (!this.displayName) return;
-    this.roomId = await this.connection.invoke<string>('CreateAndJoin', this.displayName, this.userId());
-    localStorage.setItem('pp_lastRoomId', this.roomId);
-    localStorage.setItem('pp_displayName', this.displayName);
+    if (!this.displayName()) return;
+    this.roomId.set(await this.connection.invoke<string>('CreateAndJoin', this.displayName(), this.userId()));
+    localStorage.setItem('pp_lastRoomId', this.roomId()!);
+    localStorage.setItem('pp_displayName', this.displayName()!);
   }
 
   async joinRoom() {
-    if (!this.displayName || !this.roomId) return;
-    await this.connection.invoke('JoinRoom', this.roomId, this.displayName, this.userId());
-    localStorage.setItem('pp_lastRoomId', this.roomId);
-    localStorage.setItem('pp_displayName', this.displayName);
+    if (!this.displayName() || !this.roomId()) return;
+    await this.connection.invoke('JoinRoom', this.roomId(), this.displayName(), this.userId());
+    localStorage.setItem('pp_lastRoomId', this.roomId()!);
+    localStorage.setItem('pp_displayName', this.displayName()!);
   }
 
   async leaveRoom() {
-    if (!this.roomId) return;
-    await this.connection.invoke('LeaveRoom', this.roomId);
+    if (!this.roomId()) return;
+    await this.connection.invoke('LeaveRoom', this.roomId());
     this.snapshot.set(undefined);
-    this.roomId = '';
+    this.roomId.set('')
 
     localStorage.removeItem('pp_lastRoomId');
     localStorage.removeItem('pp_displayName');
   }
 
   async setStory(title: string) {
-    if (!this.roomId) return;
-    await this.connection.invoke('SetStory', this.roomId, title);
+    if (!this.roomId()) return;
+    await this.connection.invoke('SetStory', this.roomId(), title);
   }
 
   async chooseCard(card: string) {
-    if (!this.roomId) return;
-    await this.connection.invoke('ChooseCard', this.roomId, card);
+    if (!this.roomId()) return;
+    await this.connection.invoke('ChooseCard', this.roomId(), card);
     this.chosenCard.set(card);
   }
 
   async reveal() {
-    if (!this.roomId) return;
-    await this.connection.invoke('Reveal', this.roomId);
+    if (!this.roomId()) return;
+    await this.connection.invoke('Reveal', this.roomId());
   }
 
   async reset() {
-    if (!this.roomId) return;
-    await this.connection.invoke('ResetRound', this.roomId);
+    if (!this.roomId()) return;
+    await this.connection.invoke('ResetRound', this.roomId());
     this.chosenCard.set(undefined);
   }
 
