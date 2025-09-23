@@ -32,7 +32,10 @@
 
     <div class="room-container">
       <div class="room-header">
-        <h2>Room: <span class="room-id">{{ snapshot()!.roomId }}</span></h2>
+        <h2>
+          Room: <span class="room-id">{{ snapshot()!.roomId }}</span> <br>
+          User: <span class="room-id">{{ displayName }}</span>
+        </h2>
         <button type="button" class="leave-btn" (click)="leaveRoom()">Leave</button>
       </div>
 

@@ -164,6 +164,7 @@ export class App implements OnInit {
   async reset() {
     if (!this.roomId) return;
     await this.connection.invoke('ResetRound', this.roomId);
+    this.chosenCard.set(undefined);
   }
 
   trackByConnection(index: number, item: Participant) {
