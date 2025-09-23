@@ -76,15 +76,24 @@ export class App implements OnInit {
       // Server-Kontext: kein localStorage verfügbar
       console.log('Running on server – skipping localStorage');
     }
-
-
-    console.log('SignalR connected');
   }
 
   private registerHandlers() {
     this.connection.onreconnecting(() => this.zone.run(() => this.isReconnecting.set(true)));
     this.connection.onreconnected(() => this.zone.run(() => {
-      this.joinRoom().then(()=>{this.isReconnecting.set(false); });
+      const lastRoom = localStorage.getItem('pp_lastRoomId');
+      const lastName = localStorage.getItem('pp_displayName');
+
+      this.connection.invoke('JoinRoom', lastRoom, lastName, this.userId())
+        .then(() => {
+          this.roomId = lastRoom!;
+          this.displayName = lastName!;
+          this.registerHandlers();
+          if (this.chosenCard())
+          {
+            this.chooseCard(this.chosenCard()!).then(()=>{})
+          }
+        }).finally(()=>this.isReconnecting.set(false))
     }));
     this.connection.on('presence', snap => this.zone.run(() => (this.snapshot.set(snap))));
     this.connection.on('state', snap => this.zone.run(() => (this.snapshot.set(snap))));
@@ -168,7 +177,8 @@ export class App implements OnInit {
       p => p.connectionId === this.userId()
     );
 
-    return currentUser?.vote === card;
+    //return currentUser?.vote === card;
+    return this.chosenCard() === card;
   }
 
   isCurrentUser(participant: Participant): boolean {

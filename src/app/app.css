@@ -429,6 +429,14 @@ li {
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
+.revealed {
+  background-color: white;
+  color: black;
+  border: 2px solid #2980b9;
+  transform: translateY(-8px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
 /* Action buttons */
 .action-buttons {
   display: flex;
