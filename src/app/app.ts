@@ -35,6 +35,7 @@ export class App implements OnInit {
   snapshot = signal<Snapshot|undefined>(undefined);
   userId = signal<string|undefined>(undefined);
   chosenCard = signal<string|undefined>(undefined);
+  isReconnecting = signal<boolean>(false);
 
   cards = ['1', '2', '3', '5', '8', '13', '20', '?', '☕'];
 
@@ -43,7 +44,9 @@ export class App implements OnInit {
 
   async ngOnInit() {
     this.connection = new signalR.HubConnectionBuilder()
-      .withUrl(environment.hubUrl)
+      .withUrl(environment.hubUrl, {
+        transport: signalR.HttpTransportType.WebSockets
+      })
       .withAutomaticReconnect()
       .build();
 
@@ -79,6 +82,10 @@ export class App implements OnInit {
   }
 
   private registerHandlers() {
+    this.connection.onreconnecting(() => this.zone.run(() => this.isReconnecting.set(true)));
+    this.connection.onreconnected(() => this.zone.run(() => {
+      this.joinRoom().then(()=>{this.isReconnecting.set(false); });
+    }));
     this.connection.on('presence', snap => this.zone.run(() => (this.snapshot.set(snap))));
     this.connection.on('state', snap => this.zone.run(() => (this.snapshot.set(snap))));
     this.connection.on('voteProgress', snap => this.zone.run(() => (this.snapshot.set(snap))));

@@ -1,4 +1,12 @@
 <div class="container">
+  @if(isReconnecting())
+  {
+    <div class="reconnect-overlay">
+      <div class="spinner"></div>
+      <p>Reconnecting…</p>
+    </div>
+  }
+
   <h1>Planning Poker</h1>
 
   @if(!snapshot())
