@@ -62,7 +62,6 @@ export class App implements OnInit {
         localStorage.setItem('pp_userId', uid);
       }
       this.userId.set(uid);
-      console.log('UserId:', this.userId);
 
       const lastRoom = localStorage.getItem('pp_lastRoomId');
       const lastName = localStorage.getItem('pp_displayName');
@@ -118,19 +117,13 @@ export class App implements OnInit {
   async createRoom() {
     if (!this.displayName) return;
     this.roomId = await this.connection.invoke<string>('CreateAndJoin', this.displayName, this.userId());
-    console.log('Created room:', this.roomId);
-
     localStorage.setItem('pp_lastRoomId', this.roomId);
     localStorage.setItem('pp_displayName', this.displayName);
   }
 
   async joinRoom() {
     if (!this.displayName || !this.roomId) return;
-    console.log('Joining room:', this.roomId);
-    console.log('Joining room:', this.displayName);
     await this.connection.invoke('JoinRoom', this.roomId, this.displayName, this.userId());
-    console.log('done', this.roomId);
-
     localStorage.setItem('pp_lastRoomId', this.roomId);
     localStorage.setItem('pp_displayName', this.displayName);
   }
@@ -173,12 +166,6 @@ export class App implements OnInit {
 
   isCardSelected(card: string): boolean {
     if (!this.snapshot() || !this.userId()) return false;
-
-    const currentUser = this.snapshot()!.participants.find(
-      p => p.connectionId === this.userId()
-    );
-
-    //return currentUser?.vote === card;
     return this.chosenCard() === card;
   }
 
