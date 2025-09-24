@@ -1,113 +1,23 @@
-<div class="container">
-  @if (isReconnecting()) {
-    <div class="reconnect-overlay">
-      <div class="spinner"></div>
-      <p>Reconnecting…</p>
-    </div>
-  }
 
-  <h1>Planning Poker</h1>
+<header>
+  <div class="container">
+      Planning Poker
+    <nav>
+      <ul>
+        <li>
+          <a routerLink="/">Home</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
 
-  @if (!snapshot()) {
-    <div class="login-container">
-      <div class="form-group">
-        <label for="displayName">Your Name:</label>
-        <input id="displayName" [ngModel]="displayName()" (ngModelChange)="displayName.set($event);" placeholder="Enter your name"/>
-      </div>
+<main>
+  <router-outlet></router-outlet>
+</main>
 
-      <div class="form-group">
-        <button type="button" class="create-room-btn" (click)="createRoom()" [disabled]="!displayName() || !connected">
-          Create New Room
-        </button>
-      </div>
-
-      <div class="form-group join-room">
-        <input [ngModel]="roomId()" (ngModelChange)="roomId.set($event);" placeholder="Enter room ID"/>
-        <button type="button" (click)="joinRoom()" [disabled]="!displayName() || !roomId() || !connected">
-          Enter Room
-        </button>
-      </div>
-    </div>
-  } @else {
-
-    <div class="room-container">
-      <div class="room-header">
-        <h2>
-          Room: <span class="room-id">{{ snapshot()!.roomId }}</span> <br>
-          User: <span class="display-name">{{ displayName() }}</span>
-        </h2>
-        <button type="button" class="leave-btn" (click)="leaveRoom()">Leave</button>
-      </div>
-
-      <!--
-      <div class="story-section">
-        <label for="storyTitle">Story Titel:</label>
-        <input id="storyTitle" #storyInput [value]="snapshot()!.storyTitle" (change)="setStory(storyInput.value)" />
-      </div>
-      -->
-
-      <div class="participants-section">
-        <h3>Participants</h3>
-        <div class="poker-table">
-          <!--<div class="table-center"></div>-->
-          <div class="participants-around-table">
-            @for (participant of snapshot()!.participants; track participant.userId) {
-              <div class="participant-seat" [class.current-user-seat]="isCurrentUser(participant)">
-
-                <div class="participant-card"
-                     [class.has-voted]="participant.vote && !isCurrentUser(participant)"
-                     [class.not-voted]="!participant.vote"
-                     [class.current-user-vote]="participant.vote && isCurrentUser(participant)"
-                     [class.revealed]="snapshot()!.revealed">
-                  @if(displayName() == "Matt")
-                  {
-                    <div class="user-actions">
-                      <button class="action-user-btn">a</button>
-                      <button class="chat-user-btn">c</button>
-                      @if(!isCurrentUser(participant))
-                      {
-                        <button class="kick-user-btn" (click)="kickUser(participant.userId)">x</button>
-                      }
-                    </div>
-                  }
-                  @if (!snapshot()!.revealed) {
-                    @if (participant.vote) {
-                      @if (isCurrentUser(participant)) {
-                        <span class="card-text">{{ chosenCard() }}</span>
-                      } @else {
-                        <span class="card-text">&nbsp;</span>
-                      }
-                    } @else {
-                      <span class="card-text">&nbsp;</span>
-                    }
-                  } @else {
-                    <span class="card-text">{{ participant.vote }}</span>
-                  }
-                </div>
-                <div class="participant-name">{{ participant.displayName }}</div>
-              </div>
-            }
-          </div>
-        </div>
-      </div>
-
-      <div class="cards">
-        @for (card of cards; track card) {
-          <button type="button" class="card" [disabled]="snapshot()!.revealed" [class.selected]="isCardSelected(card)"
-                  (click)="chooseCard(card)">
-            <div class="card-content">
-              <span class="card-index top-left">{{ card }}</span>
-              <span class="card-value">{{ card }}</span>
-              <span class="card-index bottom-right">{{ card }}</span>
-            </div>
-          </button>
-        }
-      </div>
-
-      <div class="action-buttons">
-        <button type="button" (click)="reveal()">Reveal</button>
-        <button type="button" (click)="reset()">New Round</button>
-      </div>
-    </div>
-  }
-</div>
+<footer>
+  <div class="container">
+    Planning Poker App - Matthias Burger
+  </div>
+</footer>

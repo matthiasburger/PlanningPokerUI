@@ -1,0 +1,22 @@
+<div class="container">
+  <div class="login-container">
+    <h1>Planning Poker</h1>
+
+    <div class="form-group">
+      <label for="displayName">Your Name</label>
+      <div class="join-room">
+        <input id="displayName" [(ngModel)]="displayName" placeholder="Enter your name" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="roomId">Room Name</label>
+      <div class="join-room">
+        <input id="roomId" [ngModel]="roomId()" (ngModelChange)="roomId.set($event);" placeholder="Enter Room Name" />
+        <button (click)="joinRoom()" class="join-room-btn" [disabled]="!displayName || !roomId">
+          Join Or Create Room
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
