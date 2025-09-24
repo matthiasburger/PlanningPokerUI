@@ -342,6 +342,7 @@ li {
   align-items: center;
   margin-bottom: 0.5rem;
   transition: all 0.3s ease;
+  position: relative;
 }
 
 .participant-card:hover {
@@ -479,3 +480,42 @@ li {
   }
 }
 
+/* User actions styling */
+.user-actions {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  gap: 2px;
+  padding: 2px;
+}
+
+.user-actions button {
+  width: 17px;
+  height: 17px;
+  border-radius: 50%; /* Make buttons circular */
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 10px;
+  background-color: white;
+  color:black;
+}
+
+/* Responsive styling for user action buttons */
+@media (max-width: 768px) {
+  .user-actions button {
+    width: 14px;
+    height: 14px;
+    font-size: 9px;
+  }
+}
+
+@media (max-width: 480px) {
+  .user-actions button {
+    width: 12px;
+    height: 12px;
+    font-size: 8px;
+  }
+}

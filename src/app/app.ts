@@ -78,7 +78,18 @@ export class App implements OnInit {
     }
   }
 
+  private unregisterAllHandlers(){
+    this.connection.off("presence");
+    this.connection.off("state");
+    this.connection.off("voteProgress");
+    this.connection.off("revealed");
+    this.connection.off("roomDeleted");
+    this.connection.off("kicked");
+  }
+
   private registerHandlers() {
+    this.unregisterAllHandlers()
+
     this.connection.onreconnecting(() => this.zone.run(() => this.isReconnecting.set(true)));
     this.connection.onreconnected(() => this.zone.run(() => {
       const lastRoom = localStorage.getItem('pp_lastRoomId');
@@ -109,9 +120,11 @@ export class App implements OnInit {
       })
     );
     this.connection.on('kicked', (msg: string) => {
-      alert(msg);
-      this.snapshot.set(undefined);
-      this.roomId.set('');
+      this.leaveRoom().then(()=>{
+        this.snapshot.set(undefined);
+        this.roomId.set('');
+        alert(msg);
+      })
     });
   }
 
@@ -172,5 +185,10 @@ export class App implements OnInit {
 
   isCurrentUser(participant: Participant): boolean {
     return participant.userId === this.userId();
+  }
+
+  async kickUser(userId: string) {
+    if (!this.roomId()) return;
+    await this.connection.invoke('KickUser', this.roomId(), userId, this.userId());
   }
 }

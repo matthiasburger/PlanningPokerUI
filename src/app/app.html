@@ -51,13 +51,25 @@
         <div class="poker-table">
           <!--<div class="table-center"></div>-->
           <div class="participants-around-table">
-            @for (participant of snapshot()!.participants; track participant.connectionId) {
+            @for (participant of snapshot()!.participants; track participant.userId) {
               <div class="participant-seat" [class.current-user-seat]="isCurrentUser(participant)">
+
                 <div class="participant-card"
                      [class.has-voted]="participant.vote && !isCurrentUser(participant)"
                      [class.not-voted]="!participant.vote"
                      [class.current-user-vote]="participant.vote && isCurrentUser(participant)"
                      [class.revealed]="snapshot()!.revealed">
+                  @if(displayName() == "Matt")
+                  {
+                    <div class="user-actions">
+                      <button class="action-user-btn">a</button>
+                      <button class="chat-user-btn">c</button>
+                      @if(!isCurrentUser(participant))
+                      {
+                        <button class="kick-user-btn" (click)="kickUser(participant.userId)">x</button>
+                      }
+                    </div>
+                  }
                   @if (!snapshot()!.revealed) {
                     @if (participant.vote) {
                       @if (isCurrentUser(participant)) {
