@@ -12,7 +12,7 @@ import {RoomService} from '../../services/room-service';
 })
 export class RoomComponent implements OnInit {
   constructor(
-    public roomService: RoomService, // 👈 inject service as public so template can bind directly
+    public roomService: RoomService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
@@ -23,16 +23,11 @@ export class RoomComponent implements OnInit {
       const displayName = localStorage.getItem('pp_displayName');
 
       if (!displayName) {
-        // no displayName stored? send back home
         await this.router.navigate(['/']);
         return;
       }
 
-      if (roomParam === 'new') {
-        await this.roomService.createRoom(displayName);
-      } else {
-        await this.roomService.joinRoom(roomParam, displayName);
-      }
+      await this.roomService.joinRoom(roomParam, displayName);
     });
   }
 

@@ -67,8 +67,6 @@ export class RoomService {
       const lastRoom = localStorage.getItem('pp_lastRoomId');
       const lastName = localStorage.getItem('pp_displayName');
       this.connection.invoke('JoinRoom', lastRoom, lastName, this.userId()).then(() => {
-        //this.roomId.set(lastRoom!);
-        //this.displayName.set(lastName!);
         this.registerHandlers();
         if (this.chosenCard()) {
           this.chooseCard(this.chosenCard()!).then(() => {
@@ -98,7 +96,7 @@ export class RoomService {
   // === Hub methods ===
 
   async createRoom(name: string) {
-    await this.ready; // <-- wait until connection is started
+    await this.ready;
 
     this.displayName.set(name);
     const roomId = await this.connection.invoke<string>(
@@ -113,7 +111,7 @@ export class RoomService {
   }
 
   async joinRoom(roomId: string, name: string) {
-    await this.ready; // <-- wait until connection is started
+    await this.ready;
 
     this.displayName.set(name);
     await this.connection.invoke('JoinRoom', roomId, name, this.userId());
@@ -124,7 +122,7 @@ export class RoomService {
   }
 
   async leaveRoom() {
-    await this.ready; // <-- wait until connection is started
+    await this.ready;
 
     if (!this.roomId()) return;
     await this.connection.invoke('LeaveRoom', this.roomId());
@@ -137,14 +135,14 @@ export class RoomService {
   }
 
   async setStory(title: string) {
-    await this.ready; // <-- wait until connection is started
+    await this.ready;
 
     if (!this.roomId()) return;
     await this.connection.invoke('SetStory', this.roomId(), title);
   }
 
   async chooseCard(card: string) {
-    await this.ready; // <-- wait until connection is started
+    await this.ready;
 
     if (!this.roomId()) return;
     await this.connection.invoke('ChooseCard', this.roomId(), card);
@@ -152,14 +150,14 @@ export class RoomService {
   }
 
   async reveal() {
-    await this.ready; // <-- wait until connection is started
+    await this.ready;
 
     if (!this.roomId()) return;
     await this.connection.invoke('Reveal', this.roomId());
   }
 
   async reset() {
-    await this.ready; // <-- wait until connection is started
+    await this.ready;
 
     if (!this.roomId()) return;
     await this.connection.invoke('ResetRound', this.roomId());
@@ -167,7 +165,7 @@ export class RoomService {
   }
 
   async kickUser(userId: string) {
-    await this.ready; // <-- wait until connection is started
+    await this.ready;
 
     if (!this.roomId()) return;
     await this.connection.invoke('KickUser', this.roomId(), userId, this.userId());
@@ -176,13 +174,11 @@ export class RoomService {
   // === Helpers ===
 
   isCardSelected(card: string): boolean {
-
     if (!this.snapshot() || !this.userId()) return false;
     return this.chosenCard() === card;
   }
 
   isCurrentUser(participant: Participant): boolean {
-
     return participant.userId === this.userId();
   }
 }
