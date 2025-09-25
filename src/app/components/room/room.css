@@ -1,0 +1,414 @@
+
+
+/* Cards styling */
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+.card {
+  position: relative;
+  width: 80px;
+  height: 120px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
+  padding: 0;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
+}
+
+.card:hover {
+  transform: translateY(-5px) rotate(2deg);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.card.selected {
+  border: 2px solid #2ecc71;
+  transform: translateY(-10px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(135deg, #e8f8f0 0%, #d1f2e6 100%);
+}
+
+.card-content {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  padding: 0.5rem;
+}
+
+.card-value {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2rem;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.card-index {
+  position: absolute;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.top-left {
+  top: 0.3rem;
+  left: 0.3rem;
+}
+
+.bottom-right {
+  bottom: 0.3rem;
+  right: 0.3rem;
+  transform: rotate(180deg);
+}
+
+/* Participant list styling */
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #ecf0f1;
+}
+
+/* Login container styling */
+.login-container {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  color: #34495e;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #bdc3c7;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.create-room-btn {
+  width: 100%;
+  padding: 0.75rem;
+  font-size: 1rem;
+  background-color: #2ecc71;
+}
+
+.create-room-btn:hover {
+  background-color: #27ae60;
+}
+
+.join-room {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.join-room input {
+  flex: 1;
+}
+
+/* Room container styling */
+.room-container {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.room-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.room-id {
+  color: #3498db;
+  font-weight: bold;
+}
+
+.leave-btn {
+  background-color: #e74c3c;
+}
+
+.leave-btn:hover {
+  background-color: #c0392b;
+}
+
+.story-section {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.story-section label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  color: #34495e;
+}
+
+.story-section input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #bdc3c7;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.participants-section {
+  margin-bottom: 2rem;
+}
+
+/* Poker table styling */
+.poker-table {
+  position: relative;
+  margin: 2rem auto;
+  max-width: 600px;
+}
+
+.table-center {
+  position: relative;
+  width: 70%;
+  height: 200px;
+  margin: 0 auto;
+  background-color: #27ae60;
+  border-radius: 50%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.participants-around-table {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.participant-seat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100px;
+  margin-bottom: 1.5rem;
+}
+
+.current-user-seat {
+  order: -1; /* Places current user at the beginning */
+}
+
+.participant-card {
+  width: 60px;
+  height: 90px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.participant-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.card-text {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.participant-name {
+  font-weight: 500;
+  text-align: center;
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Responsive design for the poker table */
+@media (max-width: 768px) {
+  .table-center {
+    width: 80%;
+    height: 150px;
+  }
+
+  .participant-seat {
+    width: 80px;
+  }
+
+  .participant-card {
+    width: 50px;
+    height: 75px;
+  }
+
+  .card-text {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .table-center {
+    width: 90%;
+    height: 120px;
+  }
+
+  .participants-around-table {
+    gap: 1rem;
+  }
+
+  .participant-seat {
+    width: 70px;
+  }
+
+  .participant-card {
+    width: 45px;
+    height: 68px;
+  }
+
+  .card-text {
+    font-size: 1rem;
+  }
+}
+
+.has-voted {
+  background-color: #2ecc71;
+  color: white;
+  border: 1px solid #27ae60;
+}
+
+.not-voted {
+  background-color: #e74c3c;
+  color: white;
+  border: 1px solid #c0392b;
+}
+
+.current-user-vote {
+  background-color: #3498db;
+  color: white;
+  border: 2px solid #2980b9;
+  transform: translateY(-8px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.revealed {
+  background-color: white;
+  color: black;
+  border: 2px solid #2980b9;
+  transform: translateY(-8px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Action buttons */
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+
+.reconnect-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.85);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  font-family: system-ui, sans-serif;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 6px solid #ddd;
+  border-top-color: #0078d7; /* Azure blue */
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin-bottom: 1rem;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* User actions styling */
+.user-actions {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  gap: 2px;
+  padding: 2px;
+}
+
+.user-actions button {
+  width: 17px;
+  height: 17px;
+  border-radius: 50%; /* Make buttons circular */
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 10px;
+  background-color: white;
+  color:black;
+}
+
+/* Responsive styling for user action buttons */
+@media (max-width: 768px) {
+  .user-actions button {
+    width: 14px;
+    height: 14px;
+    font-size: 9px;
+  }
+}
+
+@media (max-width: 480px) {
+  .user-actions button {
+    width: 12px;
+    height: 12px;
+    font-size: 8px;
+  }
+}
