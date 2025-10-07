@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, effect, OnInit} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import {RoomService} from '../../services/room-service';
@@ -65,4 +65,15 @@ export class RoomComponent implements OnInit {
   trackByConnection(index: number, item: any) {
     return item.connectionId;
   }
+
+  isFacilitator(userId: string|undefined): boolean {
+    return this.roomService.snapshot()?.facilitatorUserId === userId;
+  }
+
+  private loggingEffect = effect(() => {
+    this.roomService.roomId();
+    if (this.roomService.roomId === undefined){
+      this.router.navigate(['/']);
+    }
+  });
 }

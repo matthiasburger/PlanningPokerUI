@@ -5,4 +5,5 @@ export interface Snapshot {
   storyTitle?: string;
   revealed: boolean;
   participants: Participant[];
+  facilitatorUserId: string;
 }

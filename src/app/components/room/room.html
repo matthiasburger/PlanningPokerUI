@@ -14,7 +14,7 @@
       <div class="room-header">
         <h2>
           Room: <span class="room-id">{{ roomService.snapshot()!.roomId }}</span> <br>
-          User: <span class="display-name">{{ roomService.displayName() }}</span>
+          User: <span class="display-name">{{ roomService.displayName() }} {{isFacilitator(roomService.userId())?'(Facilitator)':''}}</span>
         </h2>
         <button type="button" class="leave-btn" (click)="leaveRoom()">Leave</button>
       </div>
@@ -42,10 +42,10 @@
                      [class.revealed]="roomService.snapshot()!.revealed">
 
                   <!-- Example facilitator check, here just using name "Matt" -->
-                  @if (roomService.displayName() == "Matt") {
+                  @if (isFacilitator(roomService.userId())) {
                     <div class="user-actions">
-                      <button class="action-user-btn">a</button>
-                      <button class="chat-user-btn">c</button>
+                      <!--<button class="action-user-btn">a</button>-->
+                      <!--<button class="chat-user-btn">c</button>-->
                       @if (!isCurrentUser(participant)) {
                         <button class="kick-user-btn" (click)="kickUser(participant.userId)">x</button>
                       }
@@ -67,7 +67,7 @@
                   }
                 </div>
 
-                <div class="participant-name">{{ participant.displayName }}</div>
+                <div class="participant-name">{{ participant.displayName }}{{isFacilitator(participant.userId)?'*':''}}</div>
               </div>
             }
           </div>
@@ -91,8 +91,8 @@
       </div>
 
       <div class="action-buttons">
-        <button type="button" (click)="reveal()">Reveal</button>
-        <button type="button" (click)="reset()">New Round</button>
+        <button type="button" [disabled]="!isFacilitator(roomService.userId())" (click)="reveal()">Reveal</button>
+        <button type="button" [disabled]="!isFacilitator(roomService.userId())" (click)="reset()">New Round</button>
       </div>
     </div>
   } @else {

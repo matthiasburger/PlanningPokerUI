@@ -3,6 +3,7 @@ import * as signalR from '@microsoft/signalr';
 import {environment} from '../../environments/environment';
 import {Snapshot} from '../models/snapshot';
 import {Participant} from '../models/participant';
+import {Router} from '@angular/router';
 
 @Injectable({providedIn: 'root'})
 export class RoomService {
@@ -20,7 +21,7 @@ export class RoomService {
 
   cards = ['1', '2', '3', '5', '8', '13', '20', '?', '☕'];
 
-  constructor() {
+  constructor(private router: Router) {
     this.ready = this.initConnection();
   }
 
@@ -88,8 +89,9 @@ export class RoomService {
     });
 
     this.connection.on('kicked', (msg: string) => {
-      alert(msg);
       this.leaveRoom();
+      this.router.navigate(['/']);
+      alert(msg);
     });
   }
 
