@@ -1,1 +1,114 @@
 /* You can add global styles to this file, and also import other style files */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+
+.container {
+  font-family: 'Roboto', Arial, sans-serif;
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .container {
+    margin: 1rem auto;
+    padding: 0 0.5rem;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  .login-container {
+    padding: 1.5rem;
+  }
+
+  .room-container {
+    padding: 1rem;
+  }
+
+  .cards {
+    gap: 0.5rem;
+  }
+
+  .card {
+    width: 70px;
+    height: 105px;
+  }
+
+  .card-value {
+    font-size: 1.8rem;
+  }
+
+  .card-index {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .cards {
+    gap: 0.3rem;
+  }
+
+  .card {
+    width: 60px;
+    height: 90px;
+  }
+
+  .card-value {
+    font-size: 1.5rem;
+  }
+
+  .card-index {
+    font-size: 0.8rem;
+  }
+
+  .room-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .leave-btn {
+    align-self: flex-end;
+  }
+}
+
+h1 {
+  color: #2c3e50;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+h2, h3 {
+  color: #34495e;
+}
+
+button {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #2980b9;
+}
+
+button:disabled {
+  background-color: #bdc3c7;
+  cursor: not-allowed;
+}
+
+input {
+  border: 1px solid #bdc3c7;
+  border-radius: 4px;
+}
